@@ -19,7 +19,7 @@ app.get '/temps', (req, res) ->
   client.lrange 'temps', (err, data) ->
     res.send(500, { error: err }) if err
 
-    res.send(200, json.stringify(data))
+    res.send(200, JSON.stringify(data))
 
 module.exports =
   start: (callback) ->
