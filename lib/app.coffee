@@ -22,7 +22,7 @@ app.get '/temps', (req, res) ->
     clean = []
     for temp in data
       t = {}
-      temp.split(';')
+      temp = temp.split(';')
       t.temp = temp.shift()
       t.time = temp.shift()
 
