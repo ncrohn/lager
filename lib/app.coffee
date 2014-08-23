@@ -24,7 +24,7 @@ app.get '/temps', (req, res) ->
       t = {}
       temp = temp.split(';')
       t.temp = parseFloat(temp.shift())
-      t.time = ParseInt(temp.shift())
+      t.time = parseInt(temp.shift())
 
       clean.push(t)
 
