@@ -23,8 +23,8 @@ app.get '/temps', (req, res) ->
     for temp in data
       t = {}
       temp = temp.split(';')
-      t.temp = temp.shift()
-      t.time = temp.shift()
+      t.temp = parseFloat(temp.shift())
+      t.time = ParseInt(temp.shift())
 
       clean.push(t)
 
