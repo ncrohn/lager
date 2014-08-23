@@ -1,24 +1,17 @@
 Backbone = require('backbone')
+$ = Backbone.$
 
-counter = 0
-
-data = (iter) ->
+getData = (cb) ->
   x = ['x']
-  sin = ['sin']
-  cos = ['cos']
+  temps = ['temps']
 
-  if iter
-    x.push(iter)
-    sin.push(Math.sin(iter/10))
-    cos.push(.5 * Math.cos(iter/10))
-  else
-    for i in [0..100]
-      x.push(i)
-      sin.push(Math.sin(i/10))
-      cos.push(.5 * Math.cos(i/10))
-      counter = i
-
-  return [x, sin, cos]
+  $.ajax('/temps', {
+    success: (payload) ->
+      for d in payload
+        x.push(d.time)
+        temps.push(d.temp)
+      cb([x, temps])
+  })
 
 class TempGraphView extends Backbone.View
 
@@ -29,19 +22,19 @@ class TempGraphView extends Backbone.View
     @_c3 = options?.c3 or window.c3
     @_d3 = options?.d3 or window.d3
 
-    @_data = data()
-
   render: ->
     unless @_chart
 
-      @_chart = @_c3.generate
-        bindto: '#chart'
-        data:
-          x: 'x',
-          columns: @_data
-          type: 'spline'
+      getData (data) =>
 
-      @$el.append(@_chart.element)
+        @_chart = @_c3.generate
+          bindto: '#chart'
+          data:
+            x: 'x',
+            columns: data
+            type: 'spline'
+
+        @$el.append(@_chart.element)
 
     return @
 
