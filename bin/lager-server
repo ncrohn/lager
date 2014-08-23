@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+require('coffee-script/register');
+
+appContainer = require('../lib/app');
+appContainer.start(function() {
+  console.log('Server started successfully. Go to localhost:3434');
+});
