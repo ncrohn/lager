@@ -19,7 +19,16 @@ app.get '/temps', (req, res) ->
   client.lrange 'temps', 0, 100, (err, data) ->
     if err? then res.status(500).send(err)
 
-    res.status(200).send(JSON.stringify(data))
+    clean = []
+    for temp in data
+      t = {}
+      temp.split(';')
+      t.temp = temp.shift()
+      t.time = temp.shift()
+
+      clean.push(t)
+
+    res.status(200).send(clean)
 
 module.exports =
   start: (callback) ->
