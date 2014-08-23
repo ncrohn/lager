@@ -16,7 +16,7 @@ app.get '/assets/app.js', browserify(__dirname+'/../src/app.coffee')
 
 app.get '/temps', (req, res) ->
 
-  client.lrange 'temps', (err, data) ->
+  client.lrange 'temps', 0, 100, (err, data) ->
     if err? then res.status(500).send(err)
 
     res.status(200).send(JSON.stringify(data))
